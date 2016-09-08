@@ -145,7 +145,7 @@
         $rootScope.$on('event:loginRequest', function (event, username, password) {
             httpHeaders.common['Authorization'] = 'Basic ' + base64.encode(username + ':' + password);
             console.log('httpHeaders.common[\'Authorization\']@' + httpHeaders.common['Authorization'] + ':::' + username + ':' + password);
-            $http.get('api/me')
+            $http.get('rest/api/me')
                     .success(function (data) {
                         $rootScope.authenticated = true;
                         $rootScope.name = data.username;
@@ -156,7 +156,7 @@
                     });
         });
 
-        /**
+        /** 
          * On 'logoutRequest' invoke logout on the server and broadcast 'event:loginRequired'.
          */
         $rootScope.$on('event:logoutRequest', function () {
@@ -190,7 +190,7 @@
         //$rootScope.$on('$viewContentChange', funtion());
         //check the networking connection.
 
-        $http.get('api/ping')
+        $http.get('rest/api/ping')
                 .success(function (data) {
                     console.log("ping result@"+data);
                 })

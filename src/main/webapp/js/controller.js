@@ -40,7 +40,7 @@
     });
 
     as.controller('NewPostController', function ($scope, $http, i18n, $location) {
-        var actionUrl = 'api/posts/';
+        var actionUrl = 'rest/api/posts/';
 
         $scope.save = function () {
             $http.post(actionUrl, $scope.newPost).success(function () {
@@ -57,7 +57,7 @@
 
     as.controller('DetailsController', function ($scope, $http, $routeParams, $q) {
         $scope.p = 1;
-        var actionUrl = 'api/posts/',
+        var actionUrl = 'rest/api/posts/',
                 loadComments = function () {
                     $http.get(actionUrl + $routeParams.id + '/comments')
                             .success(function (data) {
@@ -117,7 +117,7 @@
         
         
 
-        var actionUrl = 'api/posts/',
+        var actionUrl = 'rest/api/posts/',
                 load = function () {
                     $http.get(actionUrl + '?q=' + $scope.q
                             + '&status=' + ($scope.statusOpt.value == 'ALL' ? '' : $scope.statusOpt.value)
