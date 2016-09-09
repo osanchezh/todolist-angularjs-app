@@ -3,7 +3,7 @@
 
 	<property name="LOG_HOME" value="C:\\proyectos\\logs\\todolist-angularjs" />
 	<property name="MODULE_NAME" value="todolist-angularjs-app" />
-	<property name="PACKAGE_NAME" value="org.osanchezh" />
+	<property name="PACKAGE_NAME" value="org" />
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">

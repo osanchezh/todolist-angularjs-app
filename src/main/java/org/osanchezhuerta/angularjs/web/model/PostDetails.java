@@ -25,7 +25,20 @@ public class PostDetails implements Serializable {
 
     private Date createdDate;
 
-    public Long getId() {
+    public PostDetails() {
+		super();
+	}
+
+	public PostDetails(Long id, String title, String content, String status, Date createdDate) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.status = status;
+		this.createdDate = createdDate;
+	}
+
+	public Long getId() {
         return id;
     }
 

@@ -74,6 +74,8 @@
                                 $scope.post = result[0].data;
                                 $scope.comments = result[1].data.content;
                                 $scope.totalItems = result[1].data.totalElements;
+
+
                             });
                 };
 
@@ -90,7 +92,7 @@
         };
 
         $scope.delComment = function (idx) {
-            $http.delete('api/comments/' + $scope.comments[idx].id).success(function () {
+            $http.delete('rest/api/comments/' + $scope.comments[idx].id).success(function () {
                 $scope.comments.splice(idx, 1);
             });
         };
@@ -123,13 +125,13 @@
                             + '&status=' + ($scope.statusOpt.value == 'ALL' ? '' : $scope.statusOpt.value)
                             + '&page=' + ($scope.p - 1))
                             .success(function (data) {
-                                $scope.posts = data.content;
-                                $scope.totalItems = data.totalElements;
+                                $scope.posts = data;
+                                $scope.totalItems = data.length;
                             });
                 };
 
-        load();
-
+        load(); 
+ 
         $scope.search = function () {
             load();
         };
