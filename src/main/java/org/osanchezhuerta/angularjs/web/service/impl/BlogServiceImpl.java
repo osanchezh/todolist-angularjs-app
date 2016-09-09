@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class BlogServiceImpl implements BlogService {
 
 	private static List<PostDetails> lstPostDetails = new ArrayList<PostDetails>(0);
-	private static Map<Long,CommentDetails> mapCommentDetails = new HashMap<Long,CommentDetails>(0);
+	private static Map<Long,List<CommentDetails>> mapCommentDetails = new HashMap<Long,List<CommentDetails>>(0);
 	private static final AtomicLong counterPost = new AtomicLong();
 	private static final AtomicLong counterComment = new AtomicLong();
 
@@ -74,7 +74,14 @@ public class BlogServiceImpl implements BlogService {
 		commentDetails.setContent(fm.getContent());
 		commentDetails.setCreatedDate(new Date());
 		commentDetails.setId(counterComment.incrementAndGet());
-		mapCommentDetails.put(id, commentDetails);
+		if(mapCommentDetails.containsKey(id)){
+			mapCommentDetails.get(id).add(commentDetails);
+		}else{
+			List<CommentDetails> lstCommentDetails = new ArrayList<CommentDetails>(0);
+			lstCommentDetails.add(commentDetails);
+			mapCommentDetails.put(id, lstCommentDetails);
+		}
+		
 
 		return commentDetails;
 	}
@@ -109,7 +116,7 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public CommentDetails findCommentsByPostId(Long id) {
+	public List<CommentDetails> findCommentsByPostId(Long id) {
 		return mapCommentDetails.get(id);
 	}
 

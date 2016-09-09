@@ -16,5 +16,5 @@ public interface BlogService {
     List<PostDetails> searchPostsByCriteria();
 	boolean deletePostById(Long id);
 	void deleteCommentById(Long id);
-    CommentDetails findCommentsByPostId(Long id);
+	List<CommentDetails> findCommentsByPostId(Long id);
 }

@@ -61,20 +61,23 @@
                 loadComments = function () {
                     $http.get(actionUrl + $routeParams.id + '/comments')
                             .success(function (data) {
-                                $scope.comments = data.content;
-                                $scope.totalItems = data.totalElements;
+                                $scope.comments = data;
+                                $scope.totalItems = data.length;
+                                alert('1001');
+                                alert(data);
+                                alert(data.length);
                             });
                 },
                 load = function () {
-                    $q.all([
+                    $q.all([ 
                         $http.get(actionUrl + $routeParams.id),
                         $http.get(actionUrl + $routeParams.id + '/comments')
                     ])
                             .then(function (result) {
                                 $scope.post = result[0].data;
-                                $scope.comments = result[1].data.content;
-                                $scope.totalItems = result[1].data.totalElements;
-
+                                $scope.comments = result[1].data;
+                                $scope.totalItems = result[1].data.length;
+                                alert('1001');
 
                             });
                 };

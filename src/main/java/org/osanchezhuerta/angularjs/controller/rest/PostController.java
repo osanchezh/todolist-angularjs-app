@@ -17,6 +17,7 @@ import org.osanchezhuerta.angularjs.web.domain.Post;
 import org.osanchezhuerta.angularjs.web.model.CommentDetails;
 import org.osanchezhuerta.angularjs.web.model.CommentForm;
 import org.osanchezhuerta.angularjs.web.model.PostDetails;
+import org.osanchezhuerta.angularjs.web.model.PostForm;
 import org.osanchezhuerta.angularjs.web.model.ResponseMessage;
 import org.osanchezhuerta.angularjs.web.service.BlogService;
 import org.slf4j.Logger;
@@ -27,16 +28,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 
 
 @Component("postController")
@@ -62,6 +68,37 @@ public class PostController {
         return posts;
     }
 	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+    public ResponseMessage createPost(PostForm post) {
+
+
+        PostDetails saved = blogService.savePost(post);
+
+        LOGGER.debug("saved post id is @" + saved.getId());
+/*
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(Constants.URI_API + Constants.URI_POSTS + "/{id}")
+                .buildAndExpand(saved.getId())
+                .toUri()
+        );
+*/
+        return ResponseMessage.success("post.created");
+    }
+
+	
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public ResponseMessage deletePostById(@PathParam("id") Long id) {
+		LOGGER.debug("delete post by id @" + id);
+        blogService.deletePostById(id);
+        return ResponseMessage.success("post.updated");
+    }
+
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -82,12 +119,12 @@ public class PostController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}/comments")
-    public CommentDetails getCommentsOfPost(
+    public List<CommentDetails> getCommentsOfPost(
     		@PathParam("id") Long id) {
 
 		LOGGER.debug("get comments of post@" + id);
 
-		CommentDetails commentsOfPost = blogService.findCommentsByPostId(id);
+		List<CommentDetails> commentsOfPost = blogService.findCommentsByPostId(id);
 
         //LOGGER.debug("get post comment size @" + commentsOfPost.getTotalElements());
 
@@ -109,6 +146,8 @@ public class PostController {
 
         return ResponseMessage.success("comment.created");
     }
+    
+
     
 	public BlogService getBlogService() {
 		return blogService;
