@@ -19,7 +19,7 @@
         http://www.springframework.org/schema/aop 
         http://www.springframework.org/schema/aop/spring-aop-3.2.xsd        
         http://www.springframework.org/schema/security 
-        http://www.springframework.org/schema/security/spring-security-3.2.xsd
+        http://www.springframework.org/schema/security/spring-security-4.0.xsd
         http://www.springframework.org/schema/mvc 
         http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
@@ -30,5 +30,24 @@
   <context:component-scan base-package="org.osanchezhuerta.angularjs.web.service" /> 
   <context:component-scan base-package="org.osanchezhuerta.angularjs.controller.rest" />
   
+  <!-- 
+      <security:http auto-config="true" >
+        <security:intercept-url pattern="/" access="permitAll" />
+        <security:intercept-url pattern="/rest/api/ping" access="permitAll" />
+        <security:intercept-url pattern="/rest/api/**" access="hasRole('ADMIN') and hasRole('DBA')" />
+        <security:form-login authentication-failure-url="/Access_Denied" />
+        
+    </security:http>
+  
+    <security:authentication-manager >
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="test"  password="test"  authorities="ROLE_USER" />
+                <security:user name="admin" password="admin" authorities="ROLE_ADMIN" />
+                <security:user name="dba"   password="dba" authorities="ROLE_ADMIN,ROLE_DBA" />
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+     -->
   
 </beans>
